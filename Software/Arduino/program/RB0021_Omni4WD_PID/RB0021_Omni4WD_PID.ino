@@ -7,6 +7,7 @@
 #include <PID_Beta6.h>
 #include <MotorWheel.h>
 #include <Omni4WD.h>
+#include <ros.h>
 
 #include <fuzzy_table.h>
 #include <PID_Beta6.h>
@@ -68,4 +69,3 @@ void loop() {
 	Omni.demoActions(30,1500,500,false);
     
 }
-
