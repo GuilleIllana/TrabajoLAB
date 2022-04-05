@@ -14,6 +14,7 @@
 #include <ros.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Int32MultiArray.h>
+#include <std_msgs/Float32MultiArray.h>
 /*
 
             \                    /
@@ -45,7 +46,7 @@ MotorWheel wheel4(10,7,18,19,&irq4);
 Omni4WD Omni(&wheel1,&wheel2,&wheel3,&wheel4);
 
 
-void joyCallback(const std_msgs::Int32MultiArray& joy)
+void joyCallbackbu(const std_msgs::Int32MultiArray& joy)
 {
   
   int a = joy.data[0];
@@ -56,7 +57,7 @@ void joyCallback(const std_msgs::Int32MultiArray& joy)
   
   float rad = 0;
   
-  if (y==1) {
+  if (y == 1) {
     rad = PI/2;
   }
   else if(b == 1) {
@@ -75,16 +76,53 @@ void joyCallback(const std_msgs::Int32MultiArray& joy)
   }
 
   if (!stopCar) {
-    Omni.setCarMove(1500,rad,0);
-    Omni.delayMS(200);
+    Omni.setCarMove(30,rad,0);
+    Omni.delayMS(50);
   }
   
 }
 
 
+void joyCallbackax(const std_msgs::Float32MultiArray& joy)
+{
+  
+  int a = joy.data[0];
+  int b = joy.data[1];
+  int x = joy.data[2];
+  int y = joy.data[3];
+  bool stopCar = false;
+  
+  float rad = 0;
+  
+  if (y == 1) {
+    rad = PI/2;
+  }
+  else if(b == 1) {
+    rad = 0;
+  }
+  else if(a == 1) {
+    rad = -PI/2;
+  }
+  else if(x == 1) {
+    rad = PI;
+  }
+  else {
+      stopCar = true;
+      Omni.setCarStop();
+      Omni.delayMS(500);
+  }
+
+  if (!stopCar) {
+    Omni.setCarMove(30,rad,0);
+    Omni.delayMS(50);
+  }
+  
+}
+
 //ros::NodeHandle  nh;
 ros::NodeHandle_<ArduinoHardware, 5, 5, 128, 128> nh;
-ros::Subscriber<std_msgs::Int32MultiArray> sub("joyarduino", joyCallback);
+ros::Subscriber<std_msgs::Int32MultiArray> sub_1("joyarduinobu", joyCallbackbu);
+ros::Subscriber<std_msgs::Float32MultiArray> sub_2("joyarduinoax", joyCallbackax);
 
 void setup() {
   //TCCR0B=TCCR0B&0xf8|0x01;    // warning!! it will change millis()
@@ -97,7 +135,8 @@ void setup() {
   nh.initNode();
 
   // Lectura
-  nh.subscribe(sub);
+  nh.subscribe(sub_1);
+  nh.subscribe(sub_2);
 }
 
 void loop() {
