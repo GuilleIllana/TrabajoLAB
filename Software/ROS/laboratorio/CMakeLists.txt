@@ -156,6 +156,9 @@ include_directories(
 add_executable(mecanum src/mecanum.cpp)
 target_link_libraries(mecanum ${catkin_LIBRARIES})
 
+add_executable(mecanum_pideposicion src/mecanum_pideposicion.cpp)
+target_link_libraries(mecanum_pideposicion ${catkin_LIBRARIES})
+
 add_executable(vel_mecanum src/vel_mecanum.cpp)
 target_link_libraries(vel_mecanum ${catkin_LIBRARIES})
 
