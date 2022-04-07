@@ -11,34 +11,26 @@ public:
 private:
   void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
   ros::NodeHandle nh_;
-  ros::Publisher joy_pub_buttons;
-  ros::Publisher joy_pub_axes;
+  ros::Publisher joy_pub;
   ros::Subscriber joy_sub_;
 };
 
 joyHandler::joyHandler() {
   joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &joyHandler::joyCallback, this);
-  joy_pub_buttons = nh_.advertise<std_msgs::Int32MultiArray>("joyarduinobu", 9);
-  joy_pub_axes = nh_.advertise<std_msgs::Float32MultiArray>("joyarduinoax", 9);
+  joy_pub = nh_.advertise<std_msgs::Float32MultiArray>("joyarduino", 8);
 }
 
 void joyHandler::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-  std_msgs::Int32MultiArray array_bu;
-  std_msgs::Float32MultiArray array_ax;
+  std_msgs::Float32MultiArray array;
   
-  array_bu.data.clear();
-  for (int i = 0; i < 9; i++){
-  	array_bu.data.push_back(joy->buttons[i]);
+  array.data.clear();
+  
+  for (int i = 0; i < 8; i++){
+  	array.data.push_back(joy->axes[i]);
   }
   
-  array_ax.data.clear();
-  for (int i = 0; i < 6; i++){
-  	array_ax.data.push_back(joy->axes[i]);
-  }
-  
-  joy_pub_buttons.publish(array_bu);
-  joy_pub_axes.publish(array_ax);
+  joy_pub.publish(array);
 }
 
 
