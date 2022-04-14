@@ -20,6 +20,12 @@
       <max_y_velocity>0.6</max_y_velocity>
       <max_yaw_velocity>0.5</max_yaw_velocity>
     </plugin>
+
+    <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <jointName>lower_left_wheel_joint, upper_left_wheel_joint,upper_right_wheel_joint, lower_right_wheel_joint </jointName>
+    </plugin>
+    
+    
   </gazebo>
 
   <!-- All static links get collapsed down to base_link in Gazebo, so that's
