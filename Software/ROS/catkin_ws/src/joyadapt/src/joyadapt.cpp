@@ -33,7 +33,7 @@ void joyHandler::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
   joy_pub.publish(array);
 }
 
-
+// This is a test commit
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "joy_handler");
