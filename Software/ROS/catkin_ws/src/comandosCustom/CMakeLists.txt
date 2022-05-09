@@ -55,9 +55,9 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
+ add_service_files(
+   FILES
+   Point.srv
 #   Service2.srv
 # )
 
@@ -139,6 +139,14 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/joyadapt_node.cpp)
 add_executable(joyadapt src/comandosCustom.cpp)
 target_link_libraries(comandosCustom ${catkin_LIBRARIES})
+
+add_executable(point_mecanum src/point_mecanum.cpp)
+target_link_libraries(point_mecanum ${catkin_LIBRARIES})
+
+add_executable(point_client src/point_client.cpp)
+target_link_libraries(point_client ${catkin_LIBRARIES})
+add_dependencies(point_client comandosCustom_gencpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
