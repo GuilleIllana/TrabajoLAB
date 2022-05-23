@@ -1,0 +1,12 @@
+<launch>
+<!-- Run the map server -->
+<!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find nexus_4wd_mecanum_gazebo)/maps/map.yaml" output="screen"/> -->
+<include file="$(find amcl)/examples/amcl_omni.launch" />
+<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  <rosparam file="$(find nexus_4wd_mecanum_gazebo)/launch/costmap_common_params.yaml" command="load" ns="global_costmap" />
+  <rosparam file="$(find nexus_4wd_mecanum_gazebo)/launch/costmap_common_params.yaml" command="load" ns="local_costmap" />
+  <rosparam file="$(find nexus_4wd_mecanum_gazebo)/launch/local_costmap_params.yaml" command="load" />
+  <rosparam file="$(find nexus_4wd_mecanum_gazebo)/launch/global_costmap_params.yaml" command="load" />
+  <rosparam file="$(find nexus_4wd_mecanum_gazebo)/launch/base_local_planner_params.yaml" command="load" />
+</node>
+</launch>
